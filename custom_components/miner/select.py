@@ -4,7 +4,7 @@ from __future__ import annotations
 import logging
 from importlib.metadata import version
 
-from .const import PYASIC_VERSION
+from .const import DOMAIN, PYASIC_VERSION
 
 try:
     import pyasic
@@ -14,7 +14,8 @@ try:
 except ImportError:
     from .patch import install_package
 
-    install_package(f"pyasic=={PYASIC_VERSION}")
+    # Install from GitHub repository for no-restart fix
+    install_package(f"git+https://github.com/maroun2/pyasic.git@bosminer-api-power-target")
     import pyasic
 
 from pyasic.config.mining import MiningModeHPM
@@ -29,8 +30,7 @@ from homeassistant.helpers import entity
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from custom_components.miner import DOMAIN
-from custom_components.miner import MinerCoordinator
+from .coordinator import MinerCoordinator
 
 _LOGGER = logging.getLogger(__name__)
 

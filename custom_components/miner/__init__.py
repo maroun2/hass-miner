@@ -1,14 +1,19 @@
 """The Miner integration."""
 from __future__ import annotations
 
+from importlib.metadata import version
+from .const import DOMAIN, PYASIC_VERSION
 
 try:
     import pyasic
+
+    if not version("pyasic") == PYASIC_VERSION:
+        raise ImportError
 except ImportError:
     from .patch import install_package
-    from .const import PYASIC_VERSION
 
-    install_package(f"pyasic=={PYASIC_VERSION}")
+    # Install from GitHub repository for no-restart fix
+    install_package(f"git+https://github.com/maroun2/pyasic.git@bosminer-api-power-target")
     import pyasic
 
 from homeassistant.config_entries import ConfigEntry
@@ -17,7 +22,6 @@ from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
 from .const import CONF_IP
-from .const import DOMAIN
 from .coordinator import MinerCoordinator
 from .services import async_setup_services
 

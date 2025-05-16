@@ -1,9 +1,22 @@
-# BraiinsOS Power Target No Restart Fix
+# Braiins OS+ Power Target No Restart
 
-This branch contains a fix for setting power targets on BraiinsOS miners without causing a restart.
+This branch modifies the Miner integration to use a custom fork of the `pyasic` library that allows changing power target limits without requiring a miner restart.
 
-The fix is implemented by using a modified version of the pyasic library from a fork that addresses the restart issue in the BraiinsOS backend.
+## Changes Made
 
-## Implementation
+1. Modified the integration to install `pyasic` directly from GitHub repository instead of from PyPI.
+2. Set the `PYASIC_VERSION` to track the `bosminer-api-power-target` branch.
+3. Updated all import statements to use the GitHub version of `pyasic`.
+4. Removed references to the non-existent `local_pyasic` module.
 
-The only change in this branch is in `requirements.txt`, which now points to a specific branch of a forked pyasic repository instead of using the PyPI version. 
+## How It Works
+
+The forked `pyasic` library includes modifications to the Braiins OS+ API handler that allows setting power target values without triggering a miner restart. This provides a smoother experience for Home Assistant users who want to adjust power limits without interrupting mining operations.
+
+## Installation
+
+This version will automatically install the proper version of `pyasic` from GitHub when the integration is loaded in Home Assistant.
+
+## Credits
+
+The fix is based on the work of the Upstream Data team and their pyasic library. 

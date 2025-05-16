@@ -13,7 +13,8 @@ try:
 except ImportError:
     from .patch import install_package
 
-    install_package(f"pyasic=={PYASIC_VERSION}")
+    # Install from GitHub repository for no-restart fix
+    install_package(f"git+https://github.com/maroun2/pyasic.git@bosminer-api-power-target")
     import pyasic
 
 from homeassistant.config_entries import ConfigEntry
